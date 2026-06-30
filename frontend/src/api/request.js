@@ -38,5 +38,15 @@ service.interceptors.response.use(
     return Promise.reject(err)
   }
 )
-
+/**
+ * 将后端返回的相对路径（如 /api/upload/xxx.jpg）
+ * 转换为完整 URL（如 https://xxx.onrender.com/api/upload/xxx.jpg ）
+ */
+export function getImageUrl(path) {
+  if (!path) return ''
+  if (path.startsWith('http://') || path.startsWith('https://')) return path
+  const isProd = process.env.NODE_ENV === 'production'
+  const BASE_API = isProd ? (process.env.VUE_APP_BASE_API || '') : '/api'
+  return BASE_API + path
+}
 export default service
