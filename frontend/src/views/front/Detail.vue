@@ -2,7 +2,7 @@
   <div class="container">
     <el-card v-if="info">
       <div style="display:flex;">
-        <el-image :src="info.image || 'https://via.placeholder.com/360x240?text=No+Image'"
+        <el-image :src="getImageUrl(info.image) || 'https://via.placeholder.com/360x240?text=No+Image'"
                   style="width:360px;height:240px;" fit="cover" />
         <div style="flex:1;margin-left:24px;">
           <h2 style="margin:0;">
@@ -45,6 +45,7 @@
 
 <script>
 import { getGoodsDetail, getCommentList, addComment } from '@/api'
+import { getImageUrl } from '@/api/request'
 export default {
   data() {
     return {
