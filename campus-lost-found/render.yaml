@@ -1,0 +1,35 @@
+# Render 部署配置文件
+# 使用方式：在 Render Dashboard -> Blueprints -> New Blueprint Instance -> 导入此文件
+# Dockerfile 使用多阶段构建，云端自动编译，无需本地安装 Java/Maven
+
+services:
+  # 后端服务：SpringBoot Web Service（Docker 自动编译）
+  - type: web
+    name: campus-lost-found-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    # Render 会自动分配一个 .onrender.com 域名
+    envVars:
+      - key: JAVA_OPTS
+        value: -Xmx512m
+      # 以下数据库信息从 Aiven 获取后填入 Render Dashboard
+      - key: MYSQL_URL
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: UPLOAD_PATH
+        value: /tmp/uploads/
+      - key: LOG_LEVEL
+        value: info
+
+  # 前端服务：Static Site（纯静态文件托管，云端自动 npm install + build）
+  - type: static
+    name: campus-lost-found-frontend
+    buildCommand: cd frontend && npm install && npm run build
+    publishPath: ./frontend/dist
+    # 以下环境变量需要先部署后端，获取后端地址后再填入
+    envVars:
+      - key: VUE_APP_BASE_API
+        sync: false

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.lostfound.mapper.UserMapper">
+
+    <resultMap id="UserMap" type="com.campus.lostfound.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="phone" column="phone"/>
+        <result property="role" column="role"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="findByUsername" resultMap="UserMap">
+        SELECT * FROM user WHERE username = #{username} LIMIT 1
+    </select>
+
+    <select id="findById" resultMap="UserMap">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="findList" resultMap="UserMap">
+        SELECT * FROM user
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (username LIKE CONCAT('%', #{keyword}, '%')
+                     OR nickname LIKE CONCAT('%', #{keyword}, '%')
+                     OR phone LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <insert id="insert" parameterType="com.campus.lostfound.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(username, password, nickname, phone, role, status, create_time)
+        VALUES(#{username}, #{password}, #{nickname}, #{phone},
+               IFNULL(#{role}, 'user'), IFNULL(#{status}, 1), NOW())
+    </insert>
+
+    <update id="update" parameterType="com.campus.lostfound.entity.User">
+        UPDATE user
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="phone != null">phone = #{phone},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE user SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE user SET password = #{password} WHERE id = #{id}
+    </update>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM user WHERE role = 'user'
+    </select>
+</mapper>

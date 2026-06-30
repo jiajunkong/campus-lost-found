@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.lostfound.mapper.CategoryMapper">
+
+    <select id="findAll" resultType="com.campus.lostfound.entity.Category">
+        SELECT id, name, sort FROM category ORDER BY sort ASC, id ASC
+    </select>
+
+    <select id="findById" resultType="com.campus.lostfound.entity.Category">
+        SELECT id, name, sort FROM category WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.campus.lostfound.entity.Category" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO category(name, sort) VALUES(#{name}, IFNULL(#{sort}, 0))
+    </insert>
+
+    <update id="update" parameterType="com.campus.lostfound.entity.Category">
+        UPDATE category SET name = #{name}, sort = #{sort} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
+</mapper>
