@@ -65,7 +65,7 @@
         <el-descriptions-item label="时间" :span="2">{{ detail.lostTime }}</el-descriptions-item>
         <el-descriptions-item label="描述" :span="2">{{ detail.description }}</el-descriptions-item>
         <el-descriptions-item label="图片" :span="2">
-          <img v-if="detail.image" :src="detail.image" style="max-width:300px;" />
+          <img v-if="detail.image" :src="getImageUrl(detail.image)" style="max-width:300px;" />
           <span v-else>无</span>
         </el-descriptions-item>
       </el-descriptions>
@@ -75,6 +75,7 @@
 
 <script>
 import { getGoodsList, auditGoods, deleteGoods, getGoodsDetail } from '@/api'
+import { getImageUrl } from '@/api/request'
 export default {
   data() {
     return {
