@@ -2,7 +2,7 @@
 # 你本地只需要 Git，其他全部在云端完成
 
 # ===== 第一阶段：编译 =====
-FROM maven:3.8-openjdk-8 AS builder
+FROM maven:3.9-eclipse-temurin-8 AS builder
 WORKDIR /build
 # 先复制 pom.xml 和源码，利用 Docker 缓存加速重复部署
 COPY pom.xml .
@@ -10,7 +10,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests -q
 
 # ===== 第二阶段：运行 =====
-FROM openjdk:8-jdk-slim
+FROM eclipse-temurin:8-jdk
 WORKDIR /app
 
 # 创建上传文件目录（Render 容器内使用 /tmp/uploads）
