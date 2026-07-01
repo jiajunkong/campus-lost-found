@@ -75,7 +75,6 @@
 
 <script>
 import { getGoodsList, auditGoods, deleteGoods, getGoodsDetail } from '@/api'
-import { getImageUrl } from '@/api/request'
 export default {
   data() {
     return {
