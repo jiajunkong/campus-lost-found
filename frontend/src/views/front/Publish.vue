@@ -34,7 +34,7 @@
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" style="color:#909399;font-size:12px;">支持 jpg/png，单张 ≤ 10MB</div>
           </el-upload>
-          <img v-if="form.image" :src="getImageUrl(form.image)" style="width:160px;height:120px;margin-top:10px;object-fit:cover;" />
+          <img v-if="form.image" :src="form.image" style="width:160px;height:120px;margin-top:10px;object-fit:cover;" />
         </el-form-item>
         <el-form-item label="详细描述" prop="description">
           <el-input type="textarea" :rows="4" v-model="form.description" />
@@ -50,7 +50,6 @@
 
 <script>
 import { getCategoryList, saveGoods, getGoodsDetail, UPLOAD_URL } from '@/api'
-import { getImageUrl } from '@/api/request'
 export default {
   data() {
     return {
