@@ -63,7 +63,6 @@
 
 <script>
 import { getGoodsList, getCategoryList } from '@/api'
-import { getImageUrl } from '@/api/request'
 export default {
   data() {
     return {
