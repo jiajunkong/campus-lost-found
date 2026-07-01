@@ -29,7 +29,7 @@
       <el-col :span="6" v-for="item in list" :key="item.id">
         <el-card shadow="hover" style="margin-bottom:16px;cursor:pointer;" @click.native="goDetail(item.id)">
           <el-image
-            :src="getImageUrl(item.image) || 'https://via.placeholder.com/300x180?text=No+Image'"
+            :src="item.image || 'https://via.placeholder.com/300x180?text=No+Image'"
             style="width:100%;height:160px;" fit="cover" />
           <div style="margin-top:10px;">
             <el-tag :type="item.type === 'lost' ? 'danger' : 'success'" size="mini">
