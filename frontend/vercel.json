@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/upload/:path*", "destination": "https://campus-lost-found-8g7s.onrender.com/api/upload/:path*" }
+  ]
+}
