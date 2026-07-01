@@ -45,7 +45,13 @@ public class FileController {
         file.transferTo(dest);
 
         // 返回前端可访问的URL，前端通过 Vue 代理访问 /api/upload/**
-        String url = "/api/upload/" + fileName;
-        return Result.success(url);
+        
+// 返回完整 URL，前端跨域时也能正常加载图片
+String baseUrl = System.getenv("BASE_URL");
+if (baseUrl == null || baseUrl.isEmpty()) {
+    baseUrl = "";
+}
+String url = baseUrl + "/api/upload/" + fileName;
+return Result.success(url);
     }
 }
