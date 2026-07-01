@@ -49,4 +49,11 @@ export function getImageUrl(path) {
   const BASE_API = isProd ? (process.env.VUE_APP_BASE_API || '') : '/api'
   return BASE_API + path
 }
+export function getImageUrl(path) {
+  if (!path) return ''
+  if (path.startsWith('http://') || path.startsWith('https://')) return path
+  const isProd = process.env.NODE_ENV === 'production'
+  const BASE_API = isProd ? (process.env.VUE_APP_BASE_API || '') : '/api'
+  return BASE_API + path
+}
 export default service
